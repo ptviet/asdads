@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3-alpine'
+            image '3.5.4-jdk-8-alpine'
             args '-v /root/.m2:/root/.m2'
         }
     }
@@ -10,6 +10,7 @@ pipeline {
             steps {
                 sh '''
                    echo "PATH = ${PATH}"
+                   echo "M2_HOME = ${M2_HOME}"
                    mvn --version
                    '''
             }
