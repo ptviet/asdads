@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
+                sh 'mvn clean install'
             }
         }
         stage('Test') {
@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Deliver') {
           steps {
-            sh 'bash ./deliver.sh'
+            sh 'java -jar target/payslip-0.0.1-SNAPSHOT.jar'
           }
         }
     }
