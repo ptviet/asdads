@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Deliver') {
           steps {
-            sh 'java -jar target/payslip-0.0.1-SNAPSHOT.jar'
+            sh 'bash ./deliver.sh'
           }
         }
     }
