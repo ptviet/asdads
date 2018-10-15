@@ -6,6 +6,14 @@ pipeline {
         }
     }
     stages {
+        stage('Initialize') {
+            steps {
+                sh '''
+                   echo "PATH = ${PATH}"
+                   mvn --version
+                   '''
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
