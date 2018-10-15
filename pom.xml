@@ -49,7 +49,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.stevenph.payslip.PayslipApplication</mainClass>
+							<mainClass>com.stevenph.payslip.PayslipApplication.class</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
