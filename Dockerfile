@@ -6,6 +6,6 @@ VOLUME ["/deploy/application"]
 
 WORKDIR /deploy/application
 
-ADD . .
+COPY . .
 
 ENTRYPOINT ["mvn","clean","package"]
