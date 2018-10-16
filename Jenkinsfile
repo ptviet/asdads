@@ -1,18 +1,30 @@
-node {
-
-   stage('Clone Repository') {
-        // Get some code from a GitHub repository
-        git 'https://github.com/ptviet/payslip.git'
-    
-   }
-   stage('Build Maven Image') {
-        // docker.build("maven-build")
-        sh "docker build -t ptviet/payslip ."
-   }
-
-   stage('Deploy Spring Boot Application') {
-       
-        sh "docker run -p 8088:8088 ptviet/payslip"
-   }
-
+pipeline {
+    agent {
+        docker {
+            image 'maven:3.5.4-jdk-8-alpine'
+            args '-v /root/.m2:/root/.m2'
+        }
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('Deliver') {
+            steps {
+                sh './deliver.sh'
+            }
+        }
+    }
 }
