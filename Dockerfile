@@ -1,14 +1,12 @@
 FROM maven:3.5.4-jdk-8-alpine
 
-RUN mkdir -p /deploy/application/payslip
+WORKDIR /usr/app/payslip
 
-VOLUME ["/deploy/application/payslip"]
+COPY . .
 
 RUN mvn clean package
 
-COPY ./target/payslip.jar /deploy/application/payslip/payslip.jar
-
-WORKDIR /deploy/application/payslip
+WORKDIR /usr/app/payslip/target
 
 EXPOSE 8088
 
