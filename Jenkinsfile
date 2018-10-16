@@ -12,7 +12,7 @@ node {
 
    stage('Deploy Spring Boot Application') {
        
-        sh "docker run -p 8088:8088 ptviet/payslip"
+        sh "docker run --add-host="localhost" -p 8088:8088 ptviet/payslip"
    }
 
 }
