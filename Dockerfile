@@ -6,9 +6,9 @@ VOLUME ["/deploy/application"]
 
 WORKDIR /deploy/application
 
-COPY ./target/payslip.jar ./payslip.jar
-
 RUN mvn clean package
+
+COPY ./target/payslip.jar ./payslip.jar
 
 EXPOSE 8088
 
