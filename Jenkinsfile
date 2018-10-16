@@ -1,6 +1,5 @@
 node {
 
-    withMaven(maven:'maven') {
 
         stage('Checkout') {
             checkout scm
@@ -22,7 +21,5 @@ node {
         stage ('Run') {
             docker.image("localhost:5000/payslip:${env.version}").run('-p 8088:8088 --name payslip')
         }
-
-    }
 
 }
