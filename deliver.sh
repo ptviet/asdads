@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 
-echo 'The following command runs and outputs the execution of your Java'
-echo 'application (which Jenkins built using Maven) to the Jenkins UI.'
-java -jar target/payslip.jar
+docker build -t ptviet/payslip .
+docker run -p 8088:8088 ptviet/payslip

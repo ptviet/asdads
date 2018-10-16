@@ -6,6 +6,10 @@ VOLUME ["/deploy/application"]
 
 WORKDIR /deploy/application
 
-COPY . .
+COPY ./target/payslip.jar ./payslip.jar
 
-ENTRYPOINT ["mvn","clean","package"]
+RUN mvn clean package
+
+EXPOSE 8088
+
+CMD ["java", "-jar", "payslip.jar"]
