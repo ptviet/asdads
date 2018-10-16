@@ -12,12 +12,12 @@ node {
         }
 
         stage('Image') {
-                def app = docker.build "ptviet/payslip"
-                app.push()
+                def customImage = docker.build("ptviet/payslip:${env.BUILD_ID}")
+                customImage.push()
         }
 
         stage ('Run') {
-            docker.image("ptviet/payslip").run('-p 8088:8088 --name payslip')
+            docker.image("ptviet/payslip:${env.BUILD_ID}").run('-p 8088:8088 --name payslip')
         }
 
 }
