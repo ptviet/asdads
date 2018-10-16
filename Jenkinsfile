@@ -1,25 +1,28 @@
-pipeline {
-    agent { dockerfile true }
-    stages {
+node {
+
+    withMaven(maven:'maven') {
+
+        stage('Checkout') {
+            checkout scm
+        }
+
         stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
+            sh 'mvn clean install'
+
+            def pom = readMavenPom file:'pom.xml'
+            print pom.version
+            env.version = pom.version
         }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
+
+        stage('Image') {
+                def app = docker.build "localhost:5000/payslip:${env.version}"
+                app.push()
         }
-        stage('Deliver') {
-            steps {
-                sh './deliver.sh'
-            }
+
+        stage ('Run') {
+            docker.image("localhost:5000/payslip:${env.version}").run('-p 8088:8088 --name payslip')
         }
+
     }
+
 }
